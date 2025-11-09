@@ -1,0 +1,29 @@
+---
+title: "Suggested Selling Price - Cambridge Airbnb: MAP"
+output:
+  flexdashboard::flex_dashboard:
+    navbar:
+    -  { icon: "fa-github", href: https://github.com/madisonhess/Homework_2, align: right }
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+```
+
+## Column {.tabset .tabset-fade}
+
+### About 
+
+The red dot on the choropleth map represents the predicted listing price per night on Airbnb for 127 Harvey St, Cambridge, MA 02140 (entire three bedroom unit). 
+
+### Link to Repo
+
+https://github.com/madisonhess/Homework_2
+
+### Choropleth
+
+```{r}
+readRDS("predict.rds")
+```
+
+

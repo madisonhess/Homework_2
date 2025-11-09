@@ -1,0 +1,43 @@
+---
+title: "Map Prep"
+output: 
+  html_document:
+    df_print: paged
+---
+
+```{r setup}
+library(sf)
+
+rm(list = ls())
+cambridge_link="https://raw.githubusercontent.com/madisonhess/Homework_2/main/cambridge_layers.gpkg"
+st_layers(cambridge_link)
+```
+
+```{r layers}
+cambridge_grid10 <- st_read(cambridge_link, layer = "grid")
+myEstate_gdf <- st_read(cambridge_link, layer = "estate")
+```
+
+```{r map}
+library(ggplot2)
+library(scales)
+
+  predict_plot=ggplot() + theme_light() +
+  geom_sf(data = cambridge_grid10, aes(fill = IDW_10)) +
+  geom_sf(data = myEstate_gdf, color = "red", size = 3) +
+  coord_sf(datum = st_crs(cambridge_grid10)) +
+  scale_x_continuous(labels = label_number(scale = 1/5280, suffix = "mi")) +
+  scale_y_continuous(labels = label_number(scale = 1/5280, suffix = "mi")) +
+  scale_fill_viridis_c(option = "C") +
+  labs(
+    title = "Predicted Airbinb Listing Price in Cambridge",
+    x = "Easting",
+    y = "Northing",
+    fill = "Price ($)"
+  )
+```
+
+```{r save}
+saveRDS(predict_plot,file = "predict.rds")
+```
+
